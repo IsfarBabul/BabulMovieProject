@@ -82,19 +82,21 @@ public class MovieCollection {
         ArrayList<String> moviesMatchingCastName = new ArrayList<String>();
         for (Movie movie : movies) {
             String[] cast = movie.getCast().split("\\|");
-            for (int i = 0; i < movie.getTitle().length() - castName.length() + 1; i++) {
-                if (cast[i].substring(i, i + castName.length()).equalsIgnoreCase(castName)) {
-                    boolean castFound = false;
-                    for (String castNameInList : moviesMatchingCastName) {
-                        if (castNameInList.equals(cast[i])) {
-                            castFound = true;
-                            break;
+            for (String individualCast : cast) {
+                for (int j = 0; j < individualCast.length() - castName.length() + 1; j++) {
+                    if (individualCast.substring(j, j + castName.length()).equalsIgnoreCase(castName)) {
+                        boolean castFound = false;
+                        for (String castNameInList : moviesMatchingCastName) {
+                            if (castNameInList.equals(individualCast)) {
+                                castFound = true;
+                                break;
+                            }
                         }
+                        if (!castFound) {
+                            moviesMatchingCastName.add(individualCast);
+                        }
+                        break;
                     }
-                    if (!castFound) {
-                        moviesMatchingCastName.add(cast[i]);
-                    }
-                    break;
                 }
             }
         }
